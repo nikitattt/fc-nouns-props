@@ -33,7 +33,7 @@ export async function GET(
 
   const proposals = await loadProposals(idArray)
 
-  console.log(proposals)
+  // console.log(proposals)
 
   function Prop({ prop }: { prop: Proposal }) {
     const timestamp = dayjs().to(dayjs(prop.endTime), true)
@@ -125,7 +125,7 @@ export async function GET(
     )
   }
 
-  return new ImageResponse(
+  const response = new ImageResponse(
     (
       <div
         style={{
@@ -158,4 +158,8 @@ export async function GET(
       ]
     }
   )
+
+  response.headers.set('Cache-Control', 'max-age=900, stale-while-revalidate')
+
+  return response
 }

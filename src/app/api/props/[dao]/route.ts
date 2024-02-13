@@ -58,7 +58,7 @@ export async function POST(
 
   console.log(imageUrl)
 
-  return new NextResponse(
+  const response = new NextResponse(
     `<!DOCTYPE html>
       <html>
         <head>
@@ -79,6 +79,10 @@ export async function POST(
       }
     }
   )
+
+  response.headers.set('Cache-Control', 'max-age=900, stale-while-revalidate')
+
+  return response
 }
 
 export const GET = POST

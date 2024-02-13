@@ -3,7 +3,6 @@ import { ImageResponse } from 'next/og'
 import { join } from 'path'
 import * as fs from 'fs'
 import { Proposal } from '@/utils/types'
-import { parse } from 'querystring'
 import { loadProposals } from '@/lib/proposals'
 // import dayjs from 'dayjs'
 // import relativeTime from 'dayjs/plugin/relativeTime'
@@ -64,14 +63,15 @@ export async function GET(
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'space-between',
-          padding: '20px',
+          padding: '60px',
           width: '100%'
         }}
       >
         <span
           style={{
             fontWeight: 'bold',
-            fontSize: 96,
+            fontSize: 80,
+            maxWidth: '100%',
             whiteSpace: 'nowrap',
             overflow: 'hidden',
             textOverflow: 'ellipsis'
@@ -85,7 +85,7 @@ export async function GET(
             flexDirection: 'row',
             // alignItems: 'start',
             gap: '24px',
-            fontSize: 64
+            fontSize: 52
           }}
         >
           <span
@@ -152,7 +152,6 @@ export async function GET(
           alignItems: 'stretch', // Stretch items to fill the container height
           width: '100%',
           height: '100vh', // Full viewport height
-          // backgroundImage: 'linear-gradient(0deg, #FFF493 0%, #FFFFFF 70%)'
           background: '#FFFFFF'
         }}
       >

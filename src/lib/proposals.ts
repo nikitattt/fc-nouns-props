@@ -4,9 +4,11 @@ import { createPublicClient, http } from 'viem'
 import { mainnet } from 'viem/chains'
 import { getProposalEndTimestamp, getProposalState } from './proposalHelpers'
 
+const ANKR_KEY = process.env.ANKR_KEY
+
 const client = createPublicClient({
   chain: mainnet,
-  transport: http()
+  transport: http(`https://rpc.ankr.com/eth/${ANKR_KEY}`)
 })
 
 const url = 'https://api.thegraph.com/subgraphs/name/nounsdao/nouns-subgraph'

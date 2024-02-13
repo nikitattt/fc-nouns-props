@@ -40,9 +40,7 @@ export async function GET(req: NextRequest) {
     return (
       <p
         style={{
-          fontSize: 15,
-          fontWeight: 600,
-          textTransform: 'uppercase',
+          fontSize: 60,
           letterSpacing: 1,
           margin: '25px 0 10px',
           color: 'gray'

@@ -4,30 +4,12 @@ import { join } from 'path'
 import * as fs from 'fs'
 import { Proposal } from '@/utils/types'
 import { loadProposals } from '@/lib/proposals'
-// import dayjs from 'dayjs'
-// import relativeTime from 'dayjs/plugin/relativeTime'
-// import updateLocale from 'dayjs/plugin/updateLocale'
+import dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime'
+import updateLocale from 'dayjs/plugin/updateLocale'
 
-// dayjs.extend(relativeTime)
-// dayjs.extend(updateLocale)
-
-// dayjs.updateLocale('en', {
-//   relativeTime: {
-//     future: 'in %s',
-//     past: '%s ago',
-//     s: '1s',
-//     m: '1m',
-//     mm: '%dm',
-//     h: '1h',
-//     hh: '%dh',
-//     d: '1d',
-//     dd: '%dd',
-//     M: '1m',
-//     MM: '%dm',
-//     y: '1y',
-//     yy: '%dy'
-//   }
-// })
+dayjs.extend(relativeTime)
+dayjs.extend(updateLocale)
 
 export const dynamic = 'force-dynamic'
 // export const revalidate = 60
@@ -54,8 +36,8 @@ export async function GET(
   console.log(proposals)
 
   function Prop({ prop }: { prop: Proposal }) {
-    // const timestamp = dayjs().to(dayjs(prop.endTime), true)
-    const timestamp = '6d'
+    const timestamp = dayjs().to(dayjs(prop.endTime), true)
+    // const timestamp = '6d'
     return (
       <div
         style={{

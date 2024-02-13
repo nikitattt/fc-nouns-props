@@ -61,10 +61,10 @@ export async function GET(
         style={{
           display: 'flex',
           flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'space-between',
           padding: '60px',
-          width: '100%'
+          width: '100%',
+          alignItems: 'flex-start',
+          justifyContent: 'space-between'
         }}
       >
         <span
@@ -83,9 +83,9 @@ export async function GET(
           style={{
             display: 'flex',
             flexDirection: 'row',
-            // alignItems: 'start',
+            alignItems: 'center',
             gap: '24px',
-            fontSize: 52
+            fontSize: 42
           }}
         >
           <span

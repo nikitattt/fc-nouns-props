@@ -28,8 +28,6 @@ export async function POST(
 
   const proposals = await loadProposals()
 
-  console.log(proposals)
-
   const propsOnPage = 3
   const numProposals = proposals.length
 
@@ -53,43 +51,13 @@ export async function POST(
     ids.push(propId)
 
     propLinks.push(
-      `<meta name="fc:frame:button:${buttonId}" content="View #${propId}" />
+      `<meta name="fc:frame:button:${buttonId}" content="Prop #${propId}" />
       <meta name="fc:frame:button:${buttonId}:action" content="link" />
       <meta name="fc:frame:button:${buttonId}:target" content="${url}" />`
     )
-
-    //   // Prefix each key with the index to ensure uniqueness
-    //   const prefix = `proposals[${i}]`
-
-    //   imageUrlParams.append(`${prefix}[id]`, proposal.id.toString())
-    //   imageUrlParams.append(`${prefix}[title]`, proposal.title)
-    //   imageUrlParams.append(`${prefix}[state]`, proposal.state)
-    //   imageUrlParams.append(`${prefix}[endTime]`, proposal.endTime.toString())
-
-    //   // Optional properties
-    //   if (proposal.quorum !== undefined) {
-    //     imageUrlParams.append(`${prefix}[quorum]`, proposal.quorum.toString())
-    //   }
-
-    //   if (proposal.votes) {
-    //     imageUrlParams.append(
-    //       `${prefix}[votes][yes]`,
-    //       proposal.votes.yes.toString()
-    //     )
-    //     imageUrlParams.append(
-    //       `${prefix}[votes][no]`,
-    //       proposal.votes.no.toString()
-    //     )
-    //     imageUrlParams.append(
-    //       `${prefix}[votes][abstain]`,
-    //       proposal.votes.abstain.toString()
-    //     )
-    //   }
   }
 
   const idsQueryParam = ids.join(',')
-
-  console.log('got proposals')
 
   const postUrl = `${process.env.HOST}/api/props/nouns`
   const imageUrl = `${process.env.HOST}/api/images/props/nouns?ids=${encodeURIComponent(idsQueryParam)}`

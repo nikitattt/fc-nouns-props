@@ -7,6 +7,7 @@ import { parse } from 'querystring'
 import { loadProposals } from '@/lib/proposals'
 
 export const dynamic = 'force-dynamic'
+// export const revalidate = 60
 
 const unboundedBlackPath = join(process.cwd(), 'public/Unbounded-Black.ttf')
 let unboundedBlack = fs.readFileSync(unboundedBlackPath)
@@ -15,9 +16,7 @@ export async function GET(
   req: NextRequest,
   { params }: { params: { dao: string } }
 ) {
-  console.log('begin rendering image')
   const ids = req.nextUrl.searchParams.get('ids')
-  console.log('ids:', ids)
 
   // Check if 'ids' is present
   if (!ids) {

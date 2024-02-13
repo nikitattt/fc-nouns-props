@@ -37,7 +37,7 @@ export default function Home() {
           <p className="max-w-lg mx-auto">Post this link in fc feed:</p>
           <div className="px-4 py-2 mt-4 w-max mx-auto bg-gray-900 rounded-lg">
             <p className="font-mono text-sm text-purple-400">
-              https://fcprops.iamng.wtf/nouns
+              {process.env.HOST}/nouns
             </p>
           </div>
         </div>

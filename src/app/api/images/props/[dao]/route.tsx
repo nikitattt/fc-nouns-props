@@ -12,7 +12,7 @@ dayjs.extend(relativeTime)
 dayjs.extend(updateLocale)
 
 export const dynamic = 'force-dynamic'
-// export const revalidate = 60
+// export const revalidate = 900
 
 const unboundedBlackPath = join(process.cwd(), 'public/Unbounded-Black.ttf')
 let unboundedBlack = fs.readFileSync(unboundedBlackPath)

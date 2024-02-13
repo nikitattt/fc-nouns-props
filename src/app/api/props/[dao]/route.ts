@@ -4,6 +4,8 @@ import { loadProposals } from '@/lib/proposals'
 
 const NEYNAR_KEY = process.env.NEYNAR_KEY
 
+// export const revalidate = 900
+
 export async function POST(
   req: NextRequest,
   { params }: { params: { dao: string } }

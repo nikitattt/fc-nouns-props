@@ -61,7 +61,7 @@ export async function GET(
         style={{
           display: 'flex',
           flexDirection: 'column',
-          padding: '60px',
+          paddingBottom: '34px',
           width: '100%',
           alignItems: 'flex-start',
           justifyContent: 'space-between'
@@ -147,26 +147,20 @@ export async function GET(
     (
       <div
         style={{
-          display: 'flex', // Use flex layout
-          flexDirection: 'row', // Align items horizontally
-          alignItems: 'stretch', // Stretch items to fill the container height
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'flex-start', // Align items to the start of the container
+          justifyContent: 'flex-start', // Align items to the start of the main axis
           width: '100%',
-          height: '100vh', // Full viewport height
-          background: '#FFFFFF'
+          height: '100vh',
+          background: '#FFFFFF',
+          padding: '52px', // Add padding to ensure content does not touch the edges
+          boxSizing: 'border-box' // Include padding in width and height calculations
         }}
       >
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            flex: 1,
-            width: '100%'
-          }}
-        >
-          {proposals.map((prop, i) => (
-            <Prop key={i} prop={prop} />
-          ))}
-        </div>
+        {proposals.map((prop, i) => (
+          <Prop key={i} prop={prop} />
+        ))}
       </div>
     ),
     {

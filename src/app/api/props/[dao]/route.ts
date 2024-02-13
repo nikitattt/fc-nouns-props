@@ -8,8 +8,13 @@ export async function POST(
   req: NextRequest,
   { params }: { params: { dao: string } }
 ) {
-  const body: FrameRequest = await req.json()
-  // Step 3. Validate the message
+  // const body: FrameRequest = await req.json()
+
+  // TODO: Think about verifying the data.
+  // I'm not sure we need to check the validity
+  // of the data as we don't use it in any meaningful way,
+  // but I'm not 100% on this and need to check with @v streams
+
   // const { isValid, message } = await getFrameMessage(body, {
   //   neynarApiKey: NEYNAR_KEY
   // })

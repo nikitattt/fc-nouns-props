@@ -49,7 +49,7 @@ export async function GET(
         <span
           style={{
             fontWeight: 'bold',
-            fontSize: 80,
+            fontSize: 60,
             maxWidth: '100%',
             whiteSpace: 'nowrap',
             overflow: 'hidden',
@@ -64,7 +64,7 @@ export async function GET(
             flexDirection: 'row',
             alignItems: 'center',
             gap: '24px',
-            fontSize: 42
+            fontSize: 36
           }}
         >
           <span

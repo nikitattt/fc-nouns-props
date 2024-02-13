@@ -64,7 +64,8 @@ export async function GET(
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'space-between',
-          padding: '20px'
+          padding: '20px',
+          width: '100%'
         }}
       >
         <span
@@ -78,11 +79,11 @@ export async function GET(
         >
           {prop.id} • {prop.title}
         </span>
-        {/* <div
+        <div
           style={{
             display: 'flex',
             flexDirection: 'row',
-            alignItems: 'start',
+            // alignItems: 'start',
             gap: '24px',
             fontSize: 64
           }}
@@ -91,7 +92,7 @@ export async function GET(
             style={{
               color: '#00E37C',
               border: '8px solid #00E37C80',
-              padding: '8px',
+              padding: '8px 16px',
               borderRadius: '28px'
             }}
           >
@@ -100,8 +101,8 @@ export async function GET(
           <span
             style={{
               color: '#A7A7A7',
-              border: '4px solid #A7A7A780',
-              padding: '4px',
+              border: '8px solid #A7A7A780',
+              padding: '8px 16px',
               borderRadius: '28px'
             }}
           >
@@ -110,8 +111,8 @@ export async function GET(
           <span
             style={{
               color: '#00E37C',
-              border: '4px solid #00E37C80',
-              padding: '4px',
+              border: '8px solid #00E37C80',
+              padding: '8px 16px',
               borderRadius: '28px'
             }}
           >
@@ -120,8 +121,8 @@ export async function GET(
           <span
             style={{
               color: '#A7A7A7',
-              border: '4px solid #A7A7A780',
-              padding: '4px',
+              border: '8px solid #A7A7A780',
+              padding: '8px 16px',
               borderRadius: '28px'
             }}
           >
@@ -130,14 +131,14 @@ export async function GET(
           <span
             style={{
               color: '#FF1A0B',
-              border: '4px solid #FF1A0B80',
-              padding: '4px',
+              border: '8px solid #FF1A0B80',
+              padding: '8px 16px',
               borderRadius: '28px'
             }}
           >
             {prop.votes?.no}
           </span>
-        </div> */}
+        </div>
       </div>
     )
   }
@@ -159,11 +160,7 @@ export async function GET(
           style={{
             display: 'flex',
             flexDirection: 'column',
-            justifyContent: 'flex-start',
-            paddingLeft: 52,
-            paddingRight: 52,
             flex: 1,
-            marginTop: 52,
             width: '100%'
           }}
         >

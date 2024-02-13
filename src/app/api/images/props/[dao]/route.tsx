@@ -5,6 +5,30 @@ import * as fs from 'fs'
 import { Proposal } from '@/utils/types'
 import { parse } from 'querystring'
 import { loadProposals } from '@/lib/proposals'
+// import dayjs from 'dayjs'
+// import relativeTime from 'dayjs/plugin/relativeTime'
+// import updateLocale from 'dayjs/plugin/updateLocale'
+
+// dayjs.extend(relativeTime)
+// dayjs.extend(updateLocale)
+
+// dayjs.updateLocale('en', {
+//   relativeTime: {
+//     future: 'in %s',
+//     past: '%s ago',
+//     s: '1s',
+//     m: '1m',
+//     mm: '%dm',
+//     h: '1h',
+//     hh: '%dh',
+//     d: '1d',
+//     dd: '%dd',
+//     M: '1m',
+//     MM: '%dm',
+//     y: '1y',
+//     yy: '%dy'
+//   }
+// })
 
 export const dynamic = 'force-dynamic'
 // export const revalidate = 60
@@ -31,17 +55,90 @@ export async function GET(
   console.log(proposals)
 
   function Prop({ prop }: { prop: Proposal }) {
+    // const timestamp = dayjs().to(dayjs(prop.endTime), true)
+    const timestamp = '6d'
     return (
-      <p
+      <div
         style={{
-          fontSize: 60,
-          letterSpacing: 1,
-          margin: '25px 0 10px',
-          color: 'gray'
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          padding: '20px'
         }}
       >
-        {prop.title}
-      </p>
+        <span
+          style={{
+            fontWeight: 'bold',
+            fontSize: 96,
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis'
+          }}
+        >
+          {prop.id} • {prop.title}
+        </span>
+        {/* <div
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'start',
+            gap: '24px',
+            fontSize: 64
+          }}
+        >
+          <span
+            style={{
+              color: '#00E37C',
+              border: '8px solid #00E37C80',
+              padding: '8px',
+              borderRadius: '28px'
+            }}
+          >
+            {prop.state}
+          </span>
+          <span
+            style={{
+              color: '#A7A7A7',
+              border: '4px solid #A7A7A780',
+              padding: '4px',
+              borderRadius: '28px'
+            }}
+          >
+            Ends in {timestamp}
+          </span>
+          <span
+            style={{
+              color: '#00E37C',
+              border: '4px solid #00E37C80',
+              padding: '4px',
+              borderRadius: '28px'
+            }}
+          >
+            {prop.votes?.yes}
+          </span>
+          <span
+            style={{
+              color: '#A7A7A7',
+              border: '4px solid #A7A7A780',
+              padding: '4px',
+              borderRadius: '28px'
+            }}
+          >
+            {prop.votes?.abstain}
+          </span>
+          <span
+            style={{
+              color: '#FF1A0B',
+              border: '4px solid #FF1A0B80',
+              padding: '4px',
+              borderRadius: '28px'
+            }}
+          >
+            {prop.votes?.no}
+          </span>
+        </div> */}
+      </div>
     )
   }
 

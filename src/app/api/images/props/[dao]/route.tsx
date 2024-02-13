@@ -3,38 +3,33 @@ import { ImageResponse } from 'next/og'
 import { join } from 'path'
 import * as fs from 'fs'
 import { Proposal } from '@/utils/types'
+import { parse } from 'querystring'
+import { loadProposals } from '@/lib/proposals'
 
 export const dynamic = 'force-dynamic'
 
 const unboundedBlackPath = join(process.cwd(), 'public/Unbounded-Black.ttf')
 let unboundedBlack = fs.readFileSync(unboundedBlackPath)
 
-export async function GET(req: NextRequest) {
-  const searchParams = req.nextUrl.searchParams
-  const proposalsFromQuery = searchParams.get('proposals')
+export async function GET(
+  req: NextRequest,
+  { params }: { params: { dao: string } }
+) {
+  console.log('begin rendering image')
+  const ids = req.nextUrl.searchParams.get('ids')
+  console.log('ids:', ids)
 
-  if (!proposalsFromQuery || !Array.isArray(proposalsFromQuery)) {
-    return new NextResponse('Invalid data', { status: 400 })
+  // Check if 'ids' is present
+  if (!ids) {
+    return new NextResponse('No IDs provided', { status: 400 })
   }
 
-  const proposals: Proposal[] = proposalsFromQuery.map((p: any) => {
-    const { id, title, state, endTime, quorum, votes } = p as any // Cast to 'any' because query params are not typed
+  // Split the 'ids' string by commas to get an array of IDs
+  const idArray = ids.split(',').map((id) => parseInt(id, 10))
 
-    return {
-      id: parseInt(id, 10),
-      title,
-      state,
-      endTime: parseInt(endTime, 10),
-      quorum: quorum ? parseInt(quorum, 10) : undefined,
-      votes: votes
-        ? {
-            yes: parseInt(votes.yes, 10),
-            no: parseInt(votes.no, 10),
-            abstain: parseInt(votes.abstain, 10)
-          }
-        : undefined
-    }
-  })
+  const proposals = await loadProposals(idArray)
+
+  console.log(proposals)
 
   function Prop({ prop }: { prop: Proposal }) {
     return (

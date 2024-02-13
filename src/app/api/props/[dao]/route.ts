@@ -1,10 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { FrameRequest, getFrameMessage } from '@coinbase/onchainkit'
 import { loadProposals } from '@/lib/proposals'
+import { Proposal } from '@/utils/types'
 
 const NEYNAR_KEY = process.env.NEYNAR_KEY
 
-export async function POST(req: NextRequest) {
+export async function POST(
+  req: NextRequest,
+  { params }: { params: { dao: string } }
+) {
   const body: FrameRequest = await req.json()
   // Step 3. Validate the message
   // const { isValid, message } = await getFrameMessage(body, {
@@ -24,6 +28,8 @@ export async function POST(req: NextRequest) {
 
   const proposals = await loadProposals()
 
+  console.log(proposals)
+
   const propsOnPage = 3
   const numProposals = proposals.length
 
@@ -35,7 +41,8 @@ export async function POST(req: NextRequest) {
   }
 
   const propLinks = []
-  const params = new URLSearchParams()
+  // const imageUrlParams = new URLSearchParams()
+  const ids = []
 
   for (let i = 0; i < numProposals; i++) {
     const proposal = proposals[i]
@@ -43,37 +50,51 @@ export async function POST(req: NextRequest) {
     const propId = proposal.id
     const url = `https://nouns.wtf/vote/${propId}`
 
+    ids.push(propId)
+
     propLinks.push(
       `<meta name="fc:frame:button:${buttonId}" content="View #${propId}" />
       <meta name="fc:frame:button:${buttonId}:action" content="link" />
       <meta name="fc:frame:button:${buttonId}:target" content="${url}" />`
     )
 
-    // Prefix each key with the index to ensure uniqueness
-    const prefix = `proposal[${i}]`
+    //   // Prefix each key with the index to ensure uniqueness
+    //   const prefix = `proposals[${i}]`
 
-    params.append(`${prefix}[id]`, proposal.id.toString())
-    params.append(`${prefix}[title]`, proposal.title)
-    params.append(`${prefix}[state]`, proposal.state)
-    params.append(`${prefix}[endTime]`, proposal.endTime.toString())
+    //   imageUrlParams.append(`${prefix}[id]`, proposal.id.toString())
+    //   imageUrlParams.append(`${prefix}[title]`, proposal.title)
+    //   imageUrlParams.append(`${prefix}[state]`, proposal.state)
+    //   imageUrlParams.append(`${prefix}[endTime]`, proposal.endTime.toString())
 
-    // Optional properties
-    if (proposal.quorum !== undefined) {
-      params.append(`${prefix}[quorum]`, proposal.quorum.toString())
-    }
+    //   // Optional properties
+    //   if (proposal.quorum !== undefined) {
+    //     imageUrlParams.append(`${prefix}[quorum]`, proposal.quorum.toString())
+    //   }
 
-    if (proposal.votes) {
-      params.append(`${prefix}[votes][yes]`, proposal.votes.yes.toString())
-      params.append(`${prefix}[votes][no]`, proposal.votes.no.toString())
-      params.append(
-        `${prefix}[votes][abstain]`,
-        proposal.votes.abstain.toString()
-      )
-    }
+    //   if (proposal.votes) {
+    //     imageUrlParams.append(
+    //       `${prefix}[votes][yes]`,
+    //       proposal.votes.yes.toString()
+    //     )
+    //     imageUrlParams.append(
+    //       `${prefix}[votes][no]`,
+    //       proposal.votes.no.toString()
+    //     )
+    //     imageUrlParams.append(
+    //       `${prefix}[votes][abstain]`,
+    //       proposal.votes.abstain.toString()
+    //     )
+    //   }
   }
 
+  const idsQueryParam = ids.join(',')
+
+  console.log('got proposals')
+
   const postUrl = `${process.env.HOST}/api/props/nouns`
-  const imageUrl = `${process.env.HOST}/api/images/props/nouns?${params.toString()}`
+  const imageUrl = `${process.env.HOST}/api/images/props/nouns?ids=${encodeURIComponent(idsQueryParam)}`
+
+  console.log(imageUrl)
 
   return new NextResponse(
     `<!DOCTYPE html>

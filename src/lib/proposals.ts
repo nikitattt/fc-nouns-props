@@ -13,9 +13,9 @@ const client = createPublicClient({
 
 const url = 'https://api.thegraph.com/subgraphs/name/nounsdao/nouns-subgraph'
 const query = `
-    query NounsData {
+    query NounsData($where: Proposal_filter) {
       proposals(
-        where: {status_in: [ACTIVE], id_gte: 495}
+        where: $where
         orderBy: endBlock
         orderDirection: desc
       ) {
@@ -39,9 +39,43 @@ const query = `
     }
   `
 
-export async function loadProposals() {
-  let result: AxiosResponse = await axios.post(url, { query: query })
-  const data = result.data.data
+export async function loadProposals(ids?: number[]): Promise<Proposal[]> {
+  let where: any = {
+    status_in: ['ACTIVE'],
+    id_gte: 495
+  }
+
+  if (ids && ids.length > 0) {
+    where = {
+      id_in: ids
+    }
+  }
+
+  // let result: AxiosResponse = await axios.post(url, { query: query })
+  // const data = result.data.data
+
+  const requestBody = JSON.stringify({
+    query: query,
+    variables: {
+      where: where
+    }
+  })
+
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json'
+    },
+    body: requestBody
+  })
+
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`)
+  }
+
+  const result = await response.json()
+  const data = result.data
 
   const blockNumber = await client.getBlockNumber()
 

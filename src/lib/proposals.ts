@@ -19,7 +19,7 @@ export async function loadProposals(
   if (dao === 'nouns') {
     return await loadNounsProposals(ids)
   } else {
-    return await loadBuilderL1Proposals(ids)
+    return await loadBuilderL1Proposals(dao, ids)
   }
 }
 
@@ -125,42 +125,49 @@ async function loadNounsProposals(ids?: Ids): Promise<Proposal[]> {
   return proposals
 }
 
-async function loadBuilderL1Proposals(ids?: Ids): Promise<Proposal[]> {
-  const url = 'https://api.thegraph.com/subgraphs/name/nounsdao/nouns-subgraph'
+async function loadBuilderL1Proposals(
+  dao: string,
+  ids?: Ids
+): Promise<Proposal[]> {
+  const url =
+    'https://api.goldsky.com/api/public/project_clkk1ucdyf6ak38svcatie9tf/subgraphs/nouns-builder-ethereum-mainnet/stable/gn'
   const query = `
     query NounsData($where: Proposal_filter) {
       proposals(
-        where: $where
-        orderBy: endBlock
-        orderDirection: desc
+        orderBy: proposalNumber
+        where: $where,
+        orderDirection: desc,
+        first: 10
       ) {
-        id
-        proposer {
-          id
-        }
-        startBlock
-        endBlock
-        quorumVotes
-        minQuorumVotesBPS
-        maxQuorumVotesBPS
-        title
-        status
-        executionETA
-        forVotes
-        againstVotes
         abstainVotes
-        totalSupply
+        queued
+        againstVotes
+        executed
+        executableFrom
+        expiresAt
+        forVotes
+        proposalId
+        proposalNumber
+        quorumVotes
+        title
+        vetoed
+        voteEnd
+        voteStart
       }
     }
   `
 
   let where: any = {
-    status_in: ['ACTIVE'],
-    id_gte: 495
+    dao: dao,
+    executed: false,
+    canceled: false
   }
 
   if (ids && ids.length > 0) {
     where = {
+      dao: dao,
+      executed: false,
+      canceled: false,
       id_in: ids
     }
   }

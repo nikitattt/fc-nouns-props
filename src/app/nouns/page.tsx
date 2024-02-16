@@ -1,8 +1,43 @@
+import { loadProposals } from '@/lib/proposals'
 import { Metadata } from 'next'
 
 export async function generateMetadata(): Promise<Metadata> {
-  const imageUrl = `${process.env.HOST}/intro.jpg`
+  const proposals = (await loadProposals('nouns')).slice(0, 3)
+
+  // TODO: action when more than 3 props
+
+  const numProposals = proposals.length
+
+  const propLinks = []
+  const ids = []
+
+  for (let i = 0; i < numProposals; i++) {
+    const proposal = proposals[i]
+    const buttonId = i + 1
+    const propId = proposal.id
+    const url = `https://nouns.wtf/vote/${propId}`
+
+    ids.push(propId)
+
+    propLinks.push({
+      [`fc:frame:button:${buttonId}`]: `Prop #${propId}`,
+      [`fc:frame:button:${buttonId}:action`]: 'link',
+      [`fc:frame:button:${buttonId}:target`]: url
+    })
+  }
+
+  const imageUrl = `${process.env.HOST}/api/images/props/nouns`
   const postUrl = `${process.env.HOST}/api/props/nouns`
+
+  const otherMetadata = {
+    'fc:frame': 'vNext',
+    'fc:frame:image': imageUrl,
+    'fc:frame:post_url': postUrl
+  }
+
+  propLinks.forEach((link) => {
+    Object.assign(otherMetadata, link)
+  })
 
   return {
     title: 'Nouns DAO Proposals',
@@ -12,12 +47,7 @@ export async function generateMetadata(): Promise<Metadata> {
       title: 'Nouns DAO Proposals',
       images: [imageUrl]
     },
-    other: {
-      'fc:frame': 'vNext',
-      'fc:frame:image': imageUrl,
-      'fc:frame:post_url': postUrl,
-      'fc:frame:button:1': 'See proposals'
-    }
+    other: otherMetadata
   }
 }
 

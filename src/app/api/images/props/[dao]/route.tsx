@@ -41,6 +41,8 @@ export async function GET(
   // console.log('loading props for image')
 
   const proposals = (await loadProposals(dao, [])).slice(0, 3)
+  // TODO: get builder name from call
+  const daoName = dao === 'nouns' ? 'Nouns' : 'Builder L1'
 
   // console.log(proposals)
 
@@ -135,53 +137,89 @@ export async function GET(
     )
   }
 
-  const response = new ImageResponse(
-    (
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'flex-start', // Align items to the start of the container
-          justifyContent: 'flex-start', // Align items to the start of the main axis
-          width: '100%',
-          height: '100vh',
-          background: '#FFFFFF',
-          padding: '52px', // Add padding to ensure content does not touch the edges
-          boxSizing: 'border-box' // Include padding in width and height calculations
-        }}
-      >
-        {proposals.map((prop, i) => (
-          <Prop key={i} prop={prop} />
-        ))}
-      </div>
-    ),
-    {
-      width: 1528,
-      height: 800,
-      fonts: [
-        {
-          name: 'Unbounded',
-          data: unboundedBlack,
-          weight: 900,
-          style: 'normal'
-        },
-        {
-          name: 'Unbounded',
-          data: unboundedBold,
-          weight: 700,
-          style: 'normal'
-        },
-        {
-          name: 'Unbounded',
-          data: unboundedRegular,
-          weight: 400,
-          style: 'normal'
-        }
-      ]
-    }
-  )
-
-  // response.headers.set('Cache-Control', 'max-age=900, stale-while-revalidate')
-
-  return response
+  if (proposals.length === 0) {
+    return new ImageResponse(
+      (
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'flex-start', // Align items to the start of the container
+            justifyContent: 'flex-start', // Align items to the start of the main axis
+            width: '100%',
+            height: '100vh',
+            background: '#FFFFFF',
+            padding: '52px', // Add padding to ensure content does not touch the edges
+            boxSizing: 'border-box' // Include padding in width and height calculations
+          }}
+        >
+          <p
+            style={{
+              fontSize: 99
+            }}
+          >
+            No active proposals in {daoName} DAO
+          </p>
+        </div>
+      ),
+      {
+        width: 1528,
+        height: 800,
+        fonts: [
+          {
+            name: 'Unbounded',
+            data: unboundedBlack,
+            weight: 900,
+            style: 'normal'
+          }
+        ]
+      }
+    )
+  } else {
+    return new ImageResponse(
+      (
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'flex-start', // Align items to the start of the container
+            justifyContent: 'flex-start', // Align items to the start of the main axis
+            width: '100%',
+            height: '100vh',
+            background: '#FFFFFF',
+            padding: '52px', // Add padding to ensure content does not touch the edges
+            boxSizing: 'border-box' // Include padding in width and height calculations
+          }}
+        >
+          {proposals.map((prop, i) => (
+            <Prop key={i} prop={prop} />
+          ))}
+        </div>
+      ),
+      {
+        width: 1528,
+        height: 800,
+        fonts: [
+          {
+            name: 'Unbounded',
+            data: unboundedBlack,
+            weight: 900,
+            style: 'normal'
+          },
+          {
+            name: 'Unbounded',
+            data: unboundedBold,
+            weight: 700,
+            style: 'normal'
+          },
+          {
+            name: 'Unbounded',
+            data: unboundedRegular,
+            weight: 400,
+            style: 'normal'
+          }
+        ]
+      }
+    )
+  }
 }

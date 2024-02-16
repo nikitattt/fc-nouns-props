@@ -14,6 +14,12 @@ dayjs.extend(updateLocale)
 const unboundedBlackPath = join(process.cwd(), 'public/Unbounded-Black.ttf')
 let unboundedBlack = fs.readFileSync(unboundedBlackPath)
 
+const unboundedBoldPath = join(process.cwd(), 'public/Unbounded-Bold.ttf')
+let unboundedBold = fs.readFileSync(unboundedBoldPath)
+
+const unboundedRegularPath = join(process.cwd(), 'public/Unbounded-Regular.ttf')
+let unboundedRegular = fs.readFileSync(unboundedRegularPath)
+
 export async function GET(
   req: NextRequest,
   { params }: { params: { dao: string } }
@@ -49,7 +55,8 @@ export async function GET(
           paddingBottom: '34px',
           width: '100%',
           alignItems: 'flex-start',
-          justifyContent: 'space-between'
+          justifyContent: 'space-between',
+          fontWeight: 'normal'
         }}
       >
         <span
@@ -76,7 +83,7 @@ export async function GET(
           <span
             style={{
               color: '#00E37C',
-              border: '8px solid #00E37C80',
+              border: '4px solid #00E37C80',
               padding: '8px 16px',
               borderRadius: '28px'
             }}
@@ -86,7 +93,7 @@ export async function GET(
           <span
             style={{
               color: '#A7A7A7',
-              border: '8px solid #A7A7A780',
+              border: '4px solid #A7A7A780',
               padding: '8px 16px',
               borderRadius: '28px'
             }}
@@ -96,7 +103,7 @@ export async function GET(
           <span
             style={{
               color: '#00E37C',
-              border: '8px solid #00E37C80',
+              border: '4px solid #00E37C80',
               padding: '8px 16px',
               borderRadius: '28px'
             }}
@@ -106,7 +113,7 @@ export async function GET(
           <span
             style={{
               color: '#A7A7A7',
-              border: '8px solid #A7A7A780',
+              border: '4px solid #A7A7A780',
               padding: '8px 16px',
               borderRadius: '28px'
             }}
@@ -116,7 +123,7 @@ export async function GET(
           <span
             style={{
               color: '#FF1A0B',
-              border: '8px solid #FF1A0B80',
+              border: '4px solid #FF1A0B80',
               padding: '8px 16px',
               borderRadius: '28px'
             }}
@@ -156,6 +163,18 @@ export async function GET(
           name: 'Unbounded',
           data: unboundedBlack,
           weight: 900,
+          style: 'normal'
+        },
+        {
+          name: 'Unbounded',
+          data: unboundedBold,
+          weight: 700,
+          style: 'normal'
+        },
+        {
+          name: 'Unbounded',
+          data: unboundedRegular,
+          weight: 400,
           style: 'normal'
         }
       ]

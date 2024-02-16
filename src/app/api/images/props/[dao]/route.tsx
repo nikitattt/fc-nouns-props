@@ -18,23 +18,29 @@ export async function GET(
   req: NextRequest,
   { params }: { params: { dao: string } }
 ) {
+  const dao = params.dao
   const ids = req.nextUrl.searchParams.get('ids')
 
-  // Check if 'ids' is present
-  if (!ids) {
-    return new NextResponse('No IDs provided', { status: 400 })
+  if (dao !== 'nouns' && !dao.includes('builder')) {
+    console.log('Unsupported DAO')
+    return new NextResponse('Unsupported DAO', { status: 400 })
   }
 
-  // Split the 'ids' string by commas to get an array of IDs
-  const idArray = ids.split(',').map((id) => parseInt(id, 10))
+  let idArray = []
 
-  const proposals = await loadProposals(idArray)
+  if (ids) {
+    idArray = ids.split(',').map((id) => parseInt(id, 10))
+  }
+
+  console.log('loading props for image')
+
+  const proposals = (await loadProposals(dao, [])).slice(0, 3)
 
   // console.log(proposals)
 
   function Prop({ prop }: { prop: Proposal }) {
     const timestamp = dayjs().to(dayjs(prop.endTime), true)
-    // const timestamp = '6d'
+
     return (
       <div
         style={{
@@ -156,7 +162,7 @@ export async function GET(
     }
   )
 
-  response.headers.set('Cache-Control', 'max-age=900, stale-while-revalidate')
+  // response.headers.set('Cache-Control', 'max-age=900, stale-while-revalidate')
 
   return response
 }

@@ -8,6 +8,7 @@ export async function POST(
   req: NextRequest,
   { params }: { params: { dao: string } }
 ) {
+  const dao = params.dao
   // const body: FrameRequest = await req.json()
 
   // TODO: Think about verifying the data.
@@ -23,7 +24,7 @@ export async function POST(
   //   return new NextResponse('Unauthorized', { status: 401 })
   // }
 
-  const proposals = await loadProposals()
+  const proposals = await loadProposals(dao)
 
   const propsOnPage = 3
   const numProposals = proposals.length
@@ -54,7 +55,7 @@ export async function POST(
   const postUrl = `${process.env.HOST}/api/props/nouns`
   const imageUrl = `${process.env.HOST}/api/images/props/nouns?ids=${encodeURIComponent(idsQueryParam)}`
 
-  console.log(imageUrl)
+  // console.log(imageUrl)
 
   const response = new NextResponse(
     `<!DOCTYPE html>

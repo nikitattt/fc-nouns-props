@@ -79,7 +79,8 @@ async function loadNounsProposals(ids?: Ids): Promise<Proposal[]> {
       'Content-Type': 'application/json',
       Accept: 'application/json'
     },
-    body: requestBody
+    body: requestBody,
+    next: { revalidate: 900 }
   })
 
   if (!response.ok) {
@@ -180,7 +181,8 @@ async function loadBuilderL1Proposals(ids?: Ids): Promise<Proposal[]> {
       'Content-Type': 'application/json',
       Accept: 'application/json'
     },
-    body: requestBody
+    body: requestBody,
+    next: { revalidate: 900 }
   })
 
   if (!response.ok) {

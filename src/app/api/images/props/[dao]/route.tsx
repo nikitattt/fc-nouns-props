@@ -38,7 +38,7 @@ export async function GET(
     idArray = ids.split(',').map((id) => parseInt(id, 10))
   }
 
-  console.log('loading props for image')
+  // console.log('loading props for image')
 
   const proposals = (await loadProposals(dao, [])).slice(0, 3)
 

@@ -29,8 +29,6 @@ export async function generateMetadata(): Promise<Metadata> {
   const imageUrl = `${process.env.HOST}/api/images/props/nouns`
   const postUrl = `${process.env.HOST}/api/props/nouns`
 
-  console.log('loading initial frame metadata')
-
   const otherMetadata = {
     'fc:frame': 'vNext',
     'fc:frame:image': imageUrl,

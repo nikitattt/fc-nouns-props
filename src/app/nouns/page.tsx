@@ -2,31 +2,36 @@ import { loadProposals } from '@/lib/proposals'
 import { Metadata } from 'next'
 
 export async function generateMetadata(): Promise<Metadata> {
-  const proposals = (await loadProposals('nouns')).slice(0, 3)
-
   // TODO: action when more than 3 props
+  // const proposals = (await loadProposals('nouns')).slice(0, 3)
 
-  const numProposals = proposals.length
+  // TODO: enable prop load in the frame after farcaster updates
 
-  const propLinks = []
-  const ids = []
+  // const numProposals = proposals.length
 
-  for (let i = 0; i < numProposals; i++) {
-    const proposal = proposals[i]
-    const buttonId = i + 1
-    const propId = proposal.id
-    const url = `https://nouns.wtf/vote/${propId}`
+  const propLinks: any[] = []
+  // const ids = []
 
-    ids.push(propId)
+  // for (let i = 0; i < numProposals; i++) {
+  //   const proposal = proposals[i]
+  //   const buttonId = i + 1
+  //   const propId = proposal.id
+  //   const url = `https://nouns.wtf/vote/${propId}`
 
-    propLinks.push({
-      [`fc:frame:button:${buttonId}`]: `Prop #${propId}`,
-      [`fc:frame:button:${buttonId}:action`]: 'link',
-      [`fc:frame:button:${buttonId}:target`]: url
-    })
-  }
+  //   ids.push(propId)
 
-  const imageUrl = `${process.env.HOST}/api/images/props/nouns`
+  //   propLinks.push({
+  //     [`fc:frame:button:${buttonId}`]: `Prop #${propId}`,
+  //     [`fc:frame:button:${buttonId}:action`]: 'link',
+  //     [`fc:frame:button:${buttonId}:target`]: url
+  //   })
+  // }
+
+  propLinks.push({
+    [`fc:frame:button:1`]: `⌐◨-◨`
+  })
+
+  const imageUrl = `${process.env.HOST}/intro.jpg`
   const postUrl = `${process.env.HOST}/api/props/nouns`
 
   const otherMetadata = {

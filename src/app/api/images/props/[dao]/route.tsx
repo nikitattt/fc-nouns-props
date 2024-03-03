@@ -40,7 +40,7 @@ export async function GET(
 
   // console.log('loading props for image')
 
-  const proposals = (await loadProposals(dao, [])).slice(0, 3)
+  const proposals = (await loadProposals(dao, [])).slice(0, 4)
   // TODO: get builder name from call
   const daoName = dao === 'nouns' ? 'Nouns' : 'Builder L1'
 

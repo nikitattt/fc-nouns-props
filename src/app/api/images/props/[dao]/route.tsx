@@ -138,8 +138,10 @@ export async function GET(
     )
   }
 
+  let response
+
   if (proposals.length === 0) {
-    return new ImageResponse(
+    response = new ImageResponse(
       (
         <div
           style={{
@@ -177,7 +179,7 @@ export async function GET(
       }
     )
   } else {
-    return new ImageResponse(
+    response = new ImageResponse(
       (
         <div
           style={{
@@ -223,4 +225,8 @@ export async function GET(
       }
     )
   }
+
+  response.headers.set('Cache-Control', 'max-age=900, stale-while-revalidate')
+
+  return response
 }

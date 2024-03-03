@@ -2,6 +2,8 @@ import { loadProposals } from '@/lib/proposals'
 import { Metadata } from 'next'
 import Link from 'next/link'
 
+export const revalidate = 900
+
 export async function generateMetadata(): Promise<Metadata> {
   // TODO: action when more than 3 props
   const proposals = (await loadProposals('nouns')).slice(0, 4)

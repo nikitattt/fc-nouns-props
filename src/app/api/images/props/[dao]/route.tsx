@@ -63,12 +63,13 @@ export async function GET(
       >
         <span
           style={{
-            fontWeight: 'bold',
-            fontSize: 60,
+            // fontWeight: 'bold',
+            fontSize: 52,
             maxWidth: '100%',
             whiteSpace: 'nowrap',
             overflow: 'hidden',
-            textOverflow: 'ellipsis'
+            textOverflow: 'ellipsis',
+            marginBottom: '6px'
           }}
         >
           {prop.id} • {prop.title}
